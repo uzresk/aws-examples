@@ -1,13 +1,15 @@
 package aws.ec2.ebs;
 
+import java.util.concurrent.Future;
+
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
-import com.amazonaws.services.ec2.AmazonEC2;
-import com.amazonaws.services.ec2.AmazonEC2Client;
+import com.amazonaws.services.ec2.AmazonEC2AsyncClient;
 import com.amazonaws.services.ec2.model.CreateSnapshotRequest;
+import com.amazonaws.services.ec2.model.CreateSnapshotResult;
 
 public class Ec2EbsSnapshotUseVolumeId {
 
@@ -17,7 +19,7 @@ public class Ec2EbsSnapshotUseVolumeId {
 	 * @param args
 	 *            [0] ec2 instance id
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		if (args.length != 1 || args[0] == null || "".equals(args[0])) {
 			throw new IllegalArgumentException("volumeId instance id is null.");
@@ -27,12 +29,22 @@ public class Ec2EbsSnapshotUseVolumeId {
 
 		AWSCredentialsProvider provider = new ProfileCredentialsProvider("uzresk");
 
-		AmazonEC2 ec2_tokyo = Region.getRegion(Regions.AP_NORTHEAST_1)
-				.createClient(AmazonEC2Client.class, provider,
+		AmazonEC2AsyncClient ec2 = Region.getRegion(Regions.AP_NORTHEAST_1)
+				.createClient(AmazonEC2AsyncClient.class, provider,
 						new ClientConfiguration());
-
-		ec2_tokyo.createSnapshot(new CreateSnapshotRequest(volumeId, volumeId
+		
+		Future<CreateSnapshotResult> result =
+				ec2.createSnapshotAsync(new CreateSnapshotRequest(volumeId, volumeId
 				+ " snapshot."));
-		System.out.println("snapshotの作成を要求しました。");
+		
+		System.out.println("create snapshot request end.");
+		
+		while (!result.isDone()) {
+			Thread.sleep(1000);
+			System.out.println("wait....");
+		}
+		System.out.println("snapshotの作成が完了しました。" + result.get().getSnapshot().getSnapshotId());
+		
+		ec2.shutdown();
 	}
 }
