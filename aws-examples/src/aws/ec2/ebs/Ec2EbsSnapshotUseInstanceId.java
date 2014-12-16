@@ -12,7 +12,7 @@ import com.amazonaws.services.ec2.model.DescribeVolumesResult;
 import com.amazonaws.services.ec2.model.Volume;
 import com.amazonaws.services.ec2.model.VolumeAttachment;
 
-public class Ec2EbsSnapshot {
+public class Ec2EbsSnapshotUseInstanceId {
 
 	/**
 	 * 第一引数で指定されたEC2のインスタンスIDに紐づくEBSのsnapshotを作成します。
