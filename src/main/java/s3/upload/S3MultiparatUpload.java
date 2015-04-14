@@ -1,4 +1,4 @@
-package aws.s3.upload;
+package s3.upload;
 
 import java.io.File;
 
@@ -18,13 +18,13 @@ public class S3MultiparatUpload {
 		AWSCredentialsProvider provider = new ProfileCredentialsProvider("uzr");
 
 		TransferManager tm = new TransferManager(provider.getCredentials());
-		
+
 		File file = new File("/Users/yuzuru/Downloads/10mfile");
 		long start = System.currentTimeMillis();
-		
+
 		Upload upload = tm.upload(new PutObjectRequest("data.uzr", "10mfile",
 				file));
-		
+
 		// Listnerを仕込みます。
 		upload.addProgressListener(new ProgressListener() {
 			/**
@@ -38,7 +38,7 @@ public class S3MultiparatUpload {
 					long end = System.currentTimeMillis();
 					long interval = end - start;
 					System.out.println("処理時間：" + interval + "ミリ秒");
-					System.out.println("upload finish.");					
+					System.out.println("upload finish.");
 				}
 			}
 		});

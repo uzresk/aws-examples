@@ -1,4 +1,4 @@
-package aws.ec2.ami;
+package ami;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentialsProvider;
@@ -30,7 +30,7 @@ public class Ec2CreateInstanceFromAmi {
 				.withKeyName("uzr_key");
 
 		RunInstancesResult result = ec2_tokyo.runInstances(instanceRequest);
-		
+
 		System.out.println(result.getReservation());
 	}
 }

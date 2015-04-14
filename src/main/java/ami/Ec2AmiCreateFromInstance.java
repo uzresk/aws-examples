@@ -1,4 +1,4 @@
-package aws.ec2.ami;
+package ami;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentialsProvider;
@@ -14,7 +14,7 @@ public class Ec2AmiCreateFromInstance {
 
 	/**
 	 * 第一引数で指定されたec2 instance idから、AMIを作成します。
-	 * 
+	 *
 	 * @param args
 	 */
 	public static void main(String[] args) {

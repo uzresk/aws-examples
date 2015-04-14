@@ -1,4 +1,4 @@
-package aws.ec2.sts;
+package sts;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.BasicSessionCredentials;
@@ -17,7 +17,7 @@ import com.amazonaws.services.securitytoken.model.AssumeRoleResult;
 
 public class Ec2InstanceListUseSTS {
 
-	/** Aのリソースにアクセスするためのロールの*/
+	/** AのリソースにアクセスするためのロールのARN */
 	private static final String ARN = "arn:aws:iam::xxxxxxxxxxxx:role/EC2FullAccessRole";
 
 	public static void main(String[] args) {
@@ -25,7 +25,7 @@ public class Ec2InstanceListUseSTS {
 		// BアカウントのProviderを取得する。
 		AWSCredentialsProvider provider = new ProfileCredentialsProvider(
 				"uzr_api");
-		
+
 		// STSサービスを利用するためのClientを取得します。
 		AWSSecurityTokenServiceClient client = new AWSSecurityTokenServiceClient(
 				provider.getCredentials());
@@ -37,9 +37,9 @@ public class Ec2InstanceListUseSTS {
 
 		// Aアカウントのリソースにアクセスするための一時的な認証情報を取得します。
 		BasicSessionCredentials tempCredential = new BasicSessionCredentials(
-				result.getCredentials().getAccessKeyId(), 
-				result.getCredentials().getSecretAccessKey(),
-				result.getCredentials().getSessionToken());
+				result.getCredentials().getAccessKeyId(), result
+						.getCredentials().getSecretAccessKey(), result
+						.getCredentials().getSessionToken());
 
 		// 一時的な認証情報を使って、EC2のインスタンス一覧のタグ名を取得します。
 		AmazonEC2 ec2 = new AmazonEC2Client(tempCredential);

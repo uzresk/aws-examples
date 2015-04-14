@@ -1,4 +1,4 @@
-package aws.ec2.ebs;
+package ebs;
 
 import java.util.concurrent.Future;
 
@@ -15,7 +15,7 @@ public class Ec2EbsSnapshotUseVolumeId {
 
 	/**
 	 * 第一引数で指定されたvolume IDに紐づくEBSのsnapshotを作成します。
-	 * 
+	 *
 	 * @param args
 	 *            [0] ec2 instance id
 	 */
@@ -24,7 +24,7 @@ public class Ec2EbsSnapshotUseVolumeId {
 		if (args.length != 1 || args[0] == null || "".equals(args[0])) {
 			throw new IllegalArgumentException("volumeId instance id is null.");
 		}
-		
+
 		String volumeId = args[0];
 
 		AWSCredentialsProvider provider = new ProfileCredentialsProvider("uzresk");
@@ -32,19 +32,19 @@ public class Ec2EbsSnapshotUseVolumeId {
 		AmazonEC2AsyncClient ec2 = Region.getRegion(Regions.AP_NORTHEAST_1)
 				.createClient(AmazonEC2AsyncClient.class, provider,
 						new ClientConfiguration());
-		
+
 		Future<CreateSnapshotResult> result =
 				ec2.createSnapshotAsync(new CreateSnapshotRequest(volumeId, volumeId
 				+ " snapshot."));
-		
+
 		System.out.println("create snapshot request end.");
-		
+
 		while (!result.isDone()) {
 			Thread.sleep(1000);
 			System.out.println("wait....");
 		}
 		System.out.println("snapshotの作成が完了しました。" + result.get().getSnapshot().getSnapshotId());
-		
+
 		ec2.shutdown();
 	}
 }

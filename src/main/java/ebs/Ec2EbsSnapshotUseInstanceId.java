@@ -1,4 +1,4 @@
-package aws.ec2.ebs;
+package ebs;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentialsProvider;
@@ -16,7 +16,7 @@ public class Ec2EbsSnapshotUseInstanceId {
 
 	/**
 	 * 第一引数で指定されたEC2のインスタンスIDに紐づくEBSのsnapshotを作成します。
-	 * 
+	 *
 	 * @param args[0] ec2 instance id
 	 */
 	public static void main(String[] args) {

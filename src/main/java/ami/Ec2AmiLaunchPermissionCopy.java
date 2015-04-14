@@ -1,4 +1,4 @@
-package aws.ec2.ami;
+package ami;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentialsProvider;

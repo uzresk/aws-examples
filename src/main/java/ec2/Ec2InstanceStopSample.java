@@ -1,4 +1,4 @@
-package aws.ec2;
+package ec2;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package aws.ec2.ami;
+package ami;
 
 import java.util.List;
 
@@ -19,13 +19,7 @@ import com.amazonaws.services.ec2.model.Tag;
 
 public class Ec2AmiCopy {
 
-	/**
-	 * 第一引数で指定されたAMI imageをリージョン間コピーします。<br>
-	 * tagの情報についても合わせてコピーします。
-	 * 
-	 * @param args
-	 *            AMI image id
-	 */
+
 	public static void main(String[] args) {
 
 		String sourceImageId = args[0];
@@ -40,27 +34,22 @@ public class Ec2AmiCopy {
 				.createClient(AmazonEC2Client.class, provider,
 						new ClientConfiguration());
 
-		// AMIをコピーするときのプロパティを設定します。コピー元のリージョンとAMIIDを指定しています。
 		CopyImageRequest copyImageRequest = new CopyImageRequest();
 		copyImageRequest.setDescription("copy sourceImageId:" + sourceImageId);
 		copyImageRequest.setSourceRegion(Regions.AP_NORTHEAST_1.getName());
 		copyImageRequest.setRequestCredentials(provider.getCredentials());
 		copyImageRequest.setSourceImageId(sourceImageId);
 
-		// AMIコピーの実行
 		CopyImageResult copyImageResult = ec2ClientTokyo2
 				.copyImage(copyImageRequest);
 		String copyImageId = copyImageResult.getImageId();
 
-		// この時点ではリクエストが受け付けられただけです。
-		System.out.println(sourceImageId + "から" + copyImageId + "を作成しました。");
+		System.out.println(sourceImageId + "縺九ｉ" + copyImageId + "繧剃ｽ懈�舌＠縺ｾ縺励◆縲�");
 
-		// Tagの情報をコピー元から取得して、コピーした先のAMIに紐付けます。
 		AmazonEC2 ec2ClientTokyo = Region.getRegion(Regions.AP_NORTHEAST_1)
 				.createClient(AmazonEC2Client.class, provider,
 						new ClientConfiguration());
 
-		// Tagの情報を取得
 		DescribeImagesResult describeImagesResult = ec2ClientTokyo
 				.describeImages(new DescribeImagesRequest()
 						.withImageIds(sourceImageId));
@@ -72,7 +61,6 @@ public class Ec2AmiCopy {
 
 		Image image = images.get(0);
 
-		// AMIコピーしてできたイメージにタグを紐付けます。
 		for (Tag tag : image.getTags()) {
 			ec2ClientTokyo2.createTags(new CreateTagsRequest().withResources(
 					copyImageId).withTags(tag));

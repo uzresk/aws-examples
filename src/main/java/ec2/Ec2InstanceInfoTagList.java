@@ -1,4 +1,4 @@
-package aws.ec2;
+package ec2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class Ec2InstanceInfoTagList {
 		AmazonEC2 ec2_tokyo = Region.getRegion(Regions.AP_NORTHEAST_1)
 				.createClient(AmazonEC2Client.class, provider,
 						new ClientConfiguration());
-		
+
 		List<String> systemAAAResourceIds = new ArrayList<String>();
 
 		DescribeTagsResult tagsResult = ec2_tokyo

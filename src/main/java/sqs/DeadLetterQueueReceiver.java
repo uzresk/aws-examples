@@ -1,4 +1,4 @@
-package aws.sqs;
+package sqs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,6 @@ import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
-import com.amazonaws.services.sqs.model.DeleteMessageRequest;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.amazonaws.services.sqs.model.ReceiveMessageResult;
@@ -24,7 +23,7 @@ public class DeadLetterQueueReceiver {
 				"uzresk");
 		AmazonSQS sqs = new AmazonSQSClient(provider);
 		sqs.setEndpoint(SQS_ENDPOINT);
-	
+
 		ReceiveMessageRequest request = new ReceiveMessageRequest(QUEUE);
 		List<String> attributeNames = new ArrayList<String>();
 		attributeNames.add("ApproximateFirstReceiveTimestamp");

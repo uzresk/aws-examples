@@ -1,4 +1,4 @@
-package aws.ec2;
+package ec2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class Ec2InstanceRestartSample {
 		List<String> stoppedIncetanceIds = new ArrayList<String>();
 		for (Reservation reservation : instanceResult.getReservations()) {
 			for (Instance instance : reservation.getInstances()) {
-				
+
 				if (InstanceStateName.Stopped.toString().equals(instance.getState().getName())) {
 					String instanceId = instance.getInstanceId();
 					System.out.println(instanceId + "is Stopped");
@@ -40,11 +40,11 @@ public class Ec2InstanceRestartSample {
 		}
 		// インスタンスを停止する
 		ec2_tokyo.startInstances(new StartInstancesRequest(stoppedIncetanceIds));
-		
+
 		System.out.println("状況を確認します。");
-		
+
 		boolean pending = true;
-		
+
 
 		while(pending) {
 			AmazonEC2 ec2 = Region.getRegion(Regions.AP_NORTHEAST_1)
@@ -52,17 +52,17 @@ public class Ec2InstanceRestartSample {
 							new ClientConfiguration());
 
 			for (Reservation reservation : ec2.describeInstances().getReservations()) {
-				
+
 				int runningInstanceCnt = 0;
 				for (Instance instance : reservation.getInstances()) {
 					String instanceId = instance.getInstanceId();
 					System.out.println(instanceId + " is " + instance.getState().getName());
-					
+
 					if (InstanceStateName.Running.toString().equals(instance.getState().getName())) {
 						runningInstanceCnt++;
 					}
 				}
-				
+
 				if (runningInstanceCnt == reservation.getInstances().size()) {
 					pending = false;
 				}

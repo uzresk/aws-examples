@@ -1,4 +1,4 @@
-package aws.sqs;
+package sqs;
 
 import java.util.Date;
 

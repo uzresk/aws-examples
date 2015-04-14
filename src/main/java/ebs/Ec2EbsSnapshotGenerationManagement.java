@@ -1,4 +1,4 @@
-package aws.ec2.ebs;
+package ebs;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,7 +22,7 @@ import com.amazonaws.services.ec2.model.SnapshotState;
 /**
  * snapshotの世代管理を行います。
  * 引数：EBS VolumeId　世代管理数（残しておきたい数）
- * 
+ *
  * @author yuzuru
  */
 public class Ec2EbsSnapshotGenerationManagement {
@@ -89,7 +89,7 @@ public class Ec2EbsSnapshotGenerationManagement {
 
 	/**
 	 * snapshotIdをキーに対象をパージします。
-	 * 
+	 *
 	 * @param ec2 ec2
 	 * @param snapshotId スナップショットID
 	 */

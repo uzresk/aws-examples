@@ -1,4 +1,4 @@
-package aws.sqs;
+package sqs;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,7 +27,7 @@ public class SampleQueueBatchSender {
 
 		CreateQueueRequest request = new CreateQueueRequest(QUEUE);
 		String queueUrl = sqs.createQueue(request).getQueueUrl();
-		
+
 		SendMessageBatchRequest batchRequest = new SendMessageBatchRequest(queueUrl);
 		batchRequest.setQueueUrl(queueUrl);
 
@@ -36,7 +36,7 @@ public class SampleQueueBatchSender {
 			messages.add(new SendMessageBatchRequestEntry(Integer.toString(i),new Date().toString()));
 		}
 		batchRequest.setEntries(messages);
-		
+
 		sqs.sendMessageBatch(batchRequest);
 
 	}
