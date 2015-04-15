@@ -1,4 +1,4 @@
-package kms;
+package kms.simple;
 
 import java.nio.ByteBuffer;
 import java.util.Base64;
@@ -6,35 +6,38 @@ import java.util.Base64;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
 import com.amazonaws.services.kms.AWSKMSClient;
-import com.amazonaws.services.kms.model.DecryptRequest;
+import com.amazonaws.services.kms.model.EncryptRequest;
 
-public class Decrypt {
+public class Encrypt {
 
-	private static final String TEXT = "CiBHIy8/xx/xx==";
+	private static final String KEYID = "arn:aws:kms:ap-northeast-1:xxxxxxxxxxx:key/xxxxxxxxxxxxxxx";
 
 	public static void main(String[] args) {
-
-		byte[] cipherText = Base64.getDecoder().decode(TEXT);
-
-		ByteBuffer buffer = ByteBuffer.allocate(cipherText.length);
-		buffer.put(cipherText);
-		buffer.flip();
 
 		ClientConfiguration configuration = new ClientConfiguration();
 		configuration.setProxyHost("tisproxy");
 		configuration.setProxyPort(8080);
 
+		// get data key
 		AWSKMSClient kmsClient = new AWSKMSClient(
 				new ClasspathPropertiesFileCredentialsProvider(), configuration);
 		kmsClient.setEndpoint("https://kms.ap-northeast-1.amazonaws.com");
 
-		// decrypt data
-		DecryptRequest decryptRequest = new DecryptRequest()
-				.withCiphertextBlob(buffer);
-		ByteBuffer plainText = kmsClient.decrypt(decryptRequest).getPlaintext();
+		final String dataStr = "1234567890-sdhjj";
 
-		System.out.println(getString(plainText));
+		byte[] data = dataStr.getBytes();
 
+		ByteBuffer buffer = ByteBuffer.allocate(data.length);
+		buffer.put(data);
+		buffer.flip();
+
+		EncryptRequest encryptRequest = new EncryptRequest().withKeyId(KEYID)
+				.withPlaintext(buffer);
+		ByteBuffer ciphertext = kmsClient.encrypt(encryptRequest)
+				.getCiphertextBlob();
+
+		String cipherText = getString(Base64.getEncoder().encode(ciphertext));
+		System.out.println(cipherText);
 	}
 
 	public static String getString(ByteBuffer b) {

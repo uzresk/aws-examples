@@ -1,4 +1,4 @@
-package kms;
+package kms.simple;
 
 import java.nio.ByteBuffer;
 import java.security.InvalidAlgorithmParameterException;
