@@ -21,7 +21,7 @@ public class Decrypt {
 		buffer.flip();
 
 		ClientConfiguration configuration = new ClientConfiguration();
-		configuration.setProxyHost("tisproxy");
+		configuration.setProxyHost("xxxxx");
 		configuration.setProxyPort(8080);
 
 		AWSKMSClient kmsClient = new AWSKMSClient(

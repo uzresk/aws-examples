@@ -15,7 +15,7 @@ public class Encrypt {
 	public static void main(String[] args) {
 
 		ClientConfiguration configuration = new ClientConfiguration();
-		configuration.setProxyHost("tisproxy");
+		configuration.setProxyHost("xxxxxx");
 		configuration.setProxyPort(8080);
 
 		// get data key
